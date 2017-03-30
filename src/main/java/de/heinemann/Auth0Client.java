@@ -8,6 +8,11 @@ import com.auth0.authentication.result.UserProfile;
 import com.auth0.request.Request;
 import com.auth0.spring.security.api.Auth0JWTToken;
 
+/**
+ * Client to communicate with Auth0.
+ * 
+ * Is only necessary if user information have not been included into the jwt token.
+ */
 @Component
 public class Auth0Client {
 

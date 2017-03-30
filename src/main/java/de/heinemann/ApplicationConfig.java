@@ -17,7 +17,8 @@ import com.auth0.spring.security.api.Auth0SecurityConfig;
 public class ApplicationConfig extends Auth0SecurityConfig {
 
 	/**
-	 * Provides Auth0 API access
+	 * Provides Auth0 API access. Only necessary to communicate directly with Auth0.
+	 * Information from jwt token can be extracted without this client via {@link PrincipalService}.
 	 */
 	@Bean
 	public Auth0Client auth0Client() {
@@ -35,13 +36,10 @@ public class ApplicationConfig extends Auth0SecurityConfig {
 	protected void authorizeRequests(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/ping").permitAll()
+				.antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+				.antMatchers("/missinguser/**").hasAnyAuthority("ROLE_USER")
+				.antMatchers("/missingRole/**").hasAnyAuthority("ROLE_MISSING")
 				.anyRequest().authenticated();
 	}
 
-	/*
-	 * Only required for sample purposes..
-	 */
-	String getAuthorityStrategy() {
-		return super.authorityStrategy;
-	}
 }
