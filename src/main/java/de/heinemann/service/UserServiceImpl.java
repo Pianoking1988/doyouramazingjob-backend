@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.heinemann.domain.User;
+import de.heinemann.exception.ResourceNotFoundException;
 import de.heinemann.repository.UserRepository;
 
 @Service
@@ -28,6 +29,16 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 	}
 
+	@Override
+	public User getUser(long id) throws ResourceNotFoundException {
+		User user = userRepository.findOne(id);
+		if (user == null) {
+			throw new ResourceNotFoundException();
+		} else {
+			return user;
+		}
+	}
+	
 	@Override
 	public List<User> getUsers() {
 		return userRepository.findAll();

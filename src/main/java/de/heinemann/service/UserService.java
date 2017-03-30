@@ -8,6 +8,8 @@ public interface UserService {
 
 	public User createUser(User user);
 	
+	public User getUser(long id);
+	
 	public List<User> getUsers();
 	
 }

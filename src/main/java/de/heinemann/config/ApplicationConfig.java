@@ -4,6 +4,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -39,11 +40,11 @@ public class ApplicationConfig extends Auth0SecurityConfig {
 	protected void authorizeRequests(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/ping").permitAll()
-				.antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN")
-				.antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+				.antMatchers(HttpMethod.GET, "/users").permitAll()
+				.antMatchers(HttpMethod.GET, "/users/*/jobs").permitAll()
 				.antMatchers("/missinguser/**").hasAnyAuthority("ROLE_USER")
 				.antMatchers("/missingRole/**").hasAnyAuthority("ROLE_MISSING")
-				.anyRequest().authenticated();
+				.anyRequest().hasAnyAuthority("ROLE_ADMIN");
 	}
 
 }
