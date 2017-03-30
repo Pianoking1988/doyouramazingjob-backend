@@ -1,4 +1,4 @@
-package de.heinemann;
+package de.heinemann.controller;
 
 import java.security.Principal;
 
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.auth0.spring.security.api.Auth0JWTToken;
+
+import de.heinemann.service.PrincipalService;
 
 @Controller
 @Component

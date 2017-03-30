@@ -23,6 +23,9 @@
 		<java.version>1.8</java.version>
 		<auth0.security.version>0.3.3</auth0.security.version>
 		<auth0.version>0.4.0</auth0.version>
+		<postgres.version>9.4.1208</postgres.version>
+		<hsqldb.version>2.3.2</hsqldb.version>
+		<flyway.version>4.0.3</flyway.version>
 	</properties>
 
 	<dependencies>
@@ -38,6 +41,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>auth0-spring-security-api</artifactId>
@@ -48,11 +57,30 @@
 			<artifactId>auth0</artifactId>
 			<version>${auth0.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP-java7</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -68,6 +96,5 @@
 			</plugin>
 		</plugins>
 	</build>
-
 
 </project>

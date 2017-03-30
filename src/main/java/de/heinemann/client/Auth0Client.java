@@ -1,4 +1,4 @@
-package de.heinemann;
+package de.heinemann.client;
 
 import org.springframework.stereotype.Component;
 

@@ -1,0 +1,29 @@
+server:
+    port: 3001
+    
+spring:
+    datasource:
+        driver-class-name: ${JDBC_DATABASE_DRIVER:org.hsqldb.jdbcDriver}
+        url: ${JDBC_DATABASE_URL:jdbc:hsqldb:mem:dataSource}
+        user: ${JDBC_DATABASE_USERNAME:sa}
+        password: ${JDBC_DATABASE_PASSWORD:}
+        type: com.zaxxer.hikari.HikariDataSource
+        hikari:
+            minimum-idle: 1
+            maximum-pool-size: 2
+            pool-name: hikariPool
+    jpa:
+        generate-ddl: false
+        hibernate:
+            ddl-auto: none     
+    mvc:
+        throw-exception-if-no-handler-found: true
+    resources:
+        add-mappings: false          
+
+flyway:
+    locations: db/migration/common,db/migration/hsqldb
+
+logging.level.org.springframework:
+    web: INFO
+    security: DEBUG

@@ -1,4 +1,4 @@
-package de.heinemann;
+package de.heinemann.config;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import com.auth0.spring.security.api.Auth0SecurityConfig;
+
+import de.heinemann.client.Auth0Client;
+import de.heinemann.service.PrincipalService;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -36,6 +39,7 @@ public class ApplicationConfig extends Auth0SecurityConfig {
 	protected void authorizeRequests(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/ping").permitAll()
+				.antMatchers("/users/**").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
 				.antMatchers("/missinguser/**").hasAnyAuthority("ROLE_USER")
 				.antMatchers("/missingRole/**").hasAnyAuthority("ROLE_MISSING")
