@@ -32,7 +32,7 @@ public class Job {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "user")
+	@JoinColumn(name = "\"user\"")
 	public User getUser() {
 		return user;
 	}
