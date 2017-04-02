@@ -3,7 +3,14 @@
 -- arguments.
 
 INSERT INTO users (mail, created, createdby)
-VALUES('pianoking@gmx.de', '2017-04-01 12:59:59', 'pianoking@gmx.de');
-
+	VALUES('pianoking@gmx.de', '2017-04-01 12:59:59', 'pianoking@gmx.de');
 INSERT INTO users (mail, created, createdby)
-VALUES('oliver.schmitz.informatik@googlemail.com', '2017-04-01 13:59:59', 'pianoking@gmx.de');
+	VALUES('oliver.schmitz.informatik@googlemail.com', '2017-04-01 13:59:59', 'pianoking@gmx.de');
+
+
+INSERT INTO jobs ("user", content, created, createdby)
+	VALUES(1, 'content1' ,'2017-04-01 13:10:00', 'pianoking@gmx.de');
+INSERT INTO jobs ("user", content, created, createdby)
+	VALUES(1, 'content2' ,'2017-04-01 13:20:00', 'pianoking@gmx.de');
+INSERT INTO jobs ("user", content, created, createdby)
+	VALUES(2, 'content' ,'2017-04-01 13:30:00', 'oliver.schmitz.informatik@googlemail.com');
