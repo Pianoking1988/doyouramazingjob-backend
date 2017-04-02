@@ -23,6 +23,7 @@
 		<java.version>1.8</java.version>
 		<auth0.security.version>0.3.3</auth0.security.version>
 		<auth0.version>0.4.0</auth0.version>
+		<jwt.version>0.7.0</jwt.version>
 		<postgres.version>9.4.1208</postgres.version>
 		<hsqldb.version>2.3.2</hsqldb.version>
 		<flyway.version>4.0.3</flyway.version>
@@ -57,6 +58,11 @@
 			<artifactId>auth0</artifactId>
 			<version>${auth0.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jwt.version}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.zaxxer</groupId>
@@ -84,6 +90,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

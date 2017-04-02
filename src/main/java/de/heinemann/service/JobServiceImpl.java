@@ -19,7 +19,7 @@ public class JobServiceImpl implements JobService {
 	private PrincipalService principalService;
 
 	@Autowired
-	private TimeService timeService;
+	private CalendarService timeService;
 	
 	@Override
 	public Job createJob(Job job, User user) {

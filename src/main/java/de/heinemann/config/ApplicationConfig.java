@@ -1,8 +1,12 @@
 package de.heinemann.config;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -12,12 +16,19 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import com.auth0.spring.security.api.Auth0SecurityConfig;
 
 import de.heinemann.client.Auth0Client;
+import de.heinemann.security.Role;
 import de.heinemann.service.PrincipalService;
 
 @Configuration
+@ComponentScan(basePackages = {"de.heinemann", "com.auth0.spring.security.api"})
 @EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+@EnableAutoConfiguration
+@PropertySources({
+		@PropertySource("classpath:application.yml"),
+		@PropertySource("classpath:auth0.properties")
+})
 public class ApplicationConfig extends Auth0SecurityConfig {
 
 	/**
@@ -41,10 +52,11 @@ public class ApplicationConfig extends Auth0SecurityConfig {
 		http.authorizeRequests()
 				.antMatchers("/ping").permitAll()
 				.antMatchers(HttpMethod.GET, "/users").permitAll()
+				.antMatchers(HttpMethod.POST, "/users").hasAnyAuthority(Role.ROLE_ADMIN.toString())
 				.antMatchers(HttpMethod.GET, "/users/*/jobs").permitAll()
-				.antMatchers("/missinguser/**").hasAnyAuthority("ROLE_USER")
+				.antMatchers("/missinguser/**").hasAnyAuthority(Role.ROLE_USER.toString())
 				.antMatchers("/missingRole/**").hasAnyAuthority("ROLE_MISSING")
-				.anyRequest().hasAnyAuthority("ROLE_ADMIN");
+				.anyRequest().hasAnyAuthority(Role.ROLE_ADMIN.toString());
 	}
 
 }

@@ -5,7 +5,7 @@ import java.util.Calendar;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TimeServiceImpl implements TimeService {
+public class CalendarServiceImpl implements CalendarService {
 
 	@Override
 	public Calendar now() {

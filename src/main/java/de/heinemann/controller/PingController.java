@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.auth0.spring.security.api.Auth0JWTToken;
 
 import de.heinemann.service.PrincipalService;
+import de.heinemann.service.CalendarService;
 
 @Controller
 @Component
@@ -25,10 +26,14 @@ public class PingController {
 	@Autowired
 	private PrincipalService principalService;
 	
+	@Autowired
+	private CalendarService timeService;
+	
 	@RequestMapping(value = "/ping")
 	@ResponseBody
 	public String ping() {		
-		return "All good. You DO NOT need to be authenticated to call /ping.";
+		return "All good. You DO NOT need to be authenticated to call /ping."
+				+ timeService.now().getTime().toString();
 	}
 
 	@RequestMapping(value = "/secured/ping")

@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 	private PrincipalService principalService;
 
 	@Autowired
-	private TimeService timeService;
+	private CalendarService timeService;
 	
 	@Override
 	public User createUser(User user) {
