@@ -24,8 +24,6 @@ spring:
 flyway:
     locations: db/migration/common,db/migration/hsqldb,db/migration/example
 
-logging.level:
-    org.springframework:
+logging.level.org.springframework:
         web: INFO
         security: DEBUG
-    com.auth0: DEBUG        
