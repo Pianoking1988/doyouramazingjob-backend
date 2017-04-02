@@ -22,8 +22,8 @@ spring:
         add-mappings: false          
 
 flyway:
-    locations: db/migration/common,db/migration/hsqldb
+    locations: db/migration/common,db/migration/hsqldb,db/migration/example
 
 logging.level.org.springframework:
     web: INFO
-    security: DEBUG
+    security: INFO
