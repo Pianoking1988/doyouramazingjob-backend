@@ -20,6 +20,7 @@ public class TestConfiguration {
 	public CalendarService getCalendarService() {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(2017, 03, 01, 12, 30, 59);
+		calendar.set(Calendar.MILLISECOND, 0);
 		
 		CalendarService calendarService = Mockito.mock(CalendarService.class);
 		Mockito.when(calendarService.now()).thenReturn(calendar);

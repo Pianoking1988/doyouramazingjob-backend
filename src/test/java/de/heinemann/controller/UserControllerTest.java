@@ -6,23 +6,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.Test;
 
+import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DatabaseTearDown;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
+
 import de.heinemann.domain.User;
 import de.heinemann.security.Role;
 
+@DatabaseTearDown("reset.xml")
 public class UserControllerTest extends ControllerTest {
 
 	@Test
-	public void createUserWith() throws Exception {
+	@DatabaseSetup("prepared.xml")
+	@ExpectedDatabase(value = "expected.xml", assertionMode=DatabaseAssertionMode.NON_STRICT)
+	public void createUserWithNonExistingUser() throws Exception {
 		String token = jwt.mail("pianoking@gmx.de").roles(Role.ROLE_ADMIN, Role.ROLE_USER).build();
 		
 		User user = new User();
 		user.setMail("user1@test.de");
 		
 		post("/users", user, token)
-			.andExpect(status().is2xxSuccessful())
-			.andExpect(content().json("[]"));
+			.andExpect(status().is2xxSuccessful());
+			//.andExpect(content().json("[]"));
 	}
-
 
 	@Test
 	public void testGet() throws Exception {
