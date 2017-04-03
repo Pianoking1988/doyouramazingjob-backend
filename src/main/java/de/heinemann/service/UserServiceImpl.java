@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
 	public User getUser(long id) throws ResourceNotFoundException {
 		User user = userRepository.findOne(id);
 		if (user == null) {
-			throw new ResourceNotFoundException();
+			throw new ResourceNotFoundException("User with id " + id + " not found");
 		} else {
 			return user;
 		}

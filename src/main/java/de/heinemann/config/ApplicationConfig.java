@@ -51,9 +51,9 @@ public class ApplicationConfig extends Auth0SecurityConfig {
 	protected void authorizeRequests(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
 				.antMatchers("/ping").permitAll()
+				.antMatchers(HttpMethod.GET, "/users/*/jobs").permitAll()
 				.antMatchers(HttpMethod.GET, "/users").permitAll()
 				.antMatchers(HttpMethod.POST, "/users").hasAnyAuthority(Role.ROLE_ADMIN.toString())
-				.antMatchers(HttpMethod.GET, "/users/*/jobs").permitAll()
 				.antMatchers("/missinguser/**").hasAnyAuthority(Role.ROLE_USER.toString())
 				.antMatchers("/missingRole/**").hasAnyAuthority("ROLE_MISSING")
 				.anyRequest().hasAnyAuthority(Role.ROLE_ADMIN.toString());

@@ -18,6 +18,19 @@ public class User {
 	private Calendar created;
 	private String createdBy;
 
+	public User() {}
+	
+	public User(String mail) {
+		this.mail = mail;
+	}
+	
+	public User(long id, String mail, Calendar created, String createdBy) {
+		this(mail);
+		this.id = id;
+		this.created = created;
+		this.createdBy = createdBy;
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {

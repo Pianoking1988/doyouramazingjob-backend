@@ -36,6 +36,10 @@ public class JWT {
 	}
 	
 	public JWT roles(Role... roles) {
+		if (roles == null || roles.length == 0) {
+			return this;
+		}
+		
 		List<String> roleStrings = new ArrayList<>();
 		for (Role role : roles) {
 			roleStrings.add(role.toString());
