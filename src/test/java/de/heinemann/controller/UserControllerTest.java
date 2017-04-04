@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Test;
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
@@ -15,7 +14,7 @@ import de.heinemann.domain.User;
 import de.heinemann.exception.ResourceNotFoundException;
 import de.heinemann.security.Role;
 
-@DatabaseTearDown("../reset.xml")
+//@DatabaseTearDown("../reset.xml")
 public class UserControllerTest extends ControllerTest {
 
 	@Test

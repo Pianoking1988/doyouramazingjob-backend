@@ -29,6 +29,7 @@ import de.heinemann.Application;
 import de.heinemann.builder.JWT;
 import de.heinemann.config.TestConfiguration;
 import de.heinemann.service.CalendarService;
+import de.heinemann.utils.SequenceResetter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes={Application.class, TestConfiguration.class})
@@ -49,8 +50,12 @@ public class ControllerTest {
 	@Autowired
 	protected CalendarService calendarService;
 	
+	@Autowired
+	private SequenceResetter sequenceResetter;
+	
 	@Before
 	public void init() {
+		sequenceResetter.resetSequences();
 		mockMvc = MockMvcBuilders
 				.webAppContextSetup(webApplicationContext)
 				.apply(springSecurity())
