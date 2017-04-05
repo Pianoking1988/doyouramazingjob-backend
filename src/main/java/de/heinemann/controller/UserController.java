@@ -25,6 +25,7 @@ public class UserController {
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public User createUser(@RequestBody User user) {
+		userService.assertThatUserIsNotExisting(user);
 		User result = userService.createUser(user);
         return result;
 	}

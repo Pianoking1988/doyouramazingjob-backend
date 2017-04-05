@@ -1,10 +1,13 @@
 package de.heinemann.controller;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import java.util.Calendar;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,12 +57,16 @@ public class ControllerTest {
 	private DatabaseResetterImpl databaseResetter;
 	
 	@Before
-	public void init() {
-		databaseResetter.resetDatabase();;
+	public void setUp() {
 		mockMvc = MockMvcBuilders
 				.webAppContextSetup(webApplicationContext)
 				.apply(springSecurity())
 				.build();
+	}
+	
+	@After
+	public void tearDown() {
+		databaseResetter.resetDatabase();
 	}
 			
 	protected Calendar now() {
@@ -70,12 +77,25 @@ public class ControllerTest {
 		return new ObjectMapper().writeValueAsString(value);
 	}
 	
+	protected void expectContent(Object content, ResultActions resultActions) throws Exception {
+		resultActions
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+				.andExpect(content().json(json(content), true));
+	}
+
+	protected void expectException(Exception expectedException, ResultActions resultActions) throws Exception {		
+		Exception actualException = resultActions.andReturn().getResolvedException();
+		
+		assertNotNull("Exception should not be null", actualException);
+		assertEquals("Exception message", expectedException.getMessage(), actualException.getMessage());
+		assertEquals("Exception class", expectedException.getClass(), actualException.getClass());		
+	}	
+	
 	protected ResultActions post(String token, String path, Object requestContent) throws Exception {
 		return mockMvc.perform(MockMvcRequestBuilders.post(path)
 				.header("Authorization", "Bearer " + token)
 					.contentType(MediaType.APPLICATION_JSON)
-					.content(new ObjectMapper().writeValueAsString(requestContent)))
-				.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8));				
+					.content(new ObjectMapper().writeValueAsString(requestContent)));								
 	}
 
 }

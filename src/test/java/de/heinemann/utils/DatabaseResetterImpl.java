@@ -10,6 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+/**
+ * Clears all tables and restarts the HSQLDB identities used for auto-incremented columns.
+ */
 @Component
 public class DatabaseResetterImpl implements DatabaseResetter {
 

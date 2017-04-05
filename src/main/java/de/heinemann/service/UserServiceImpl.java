@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.heinemann.domain.User;
+import de.heinemann.exception.ResourceConflictException;
 import de.heinemann.exception.ResourceNotFoundException;
 import de.heinemann.repository.UserRepository;
 
@@ -42,6 +43,13 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> getUsers() {
 		return userRepository.findAll();
+	}
+	
+	public void assertThatUserIsNotExisting(User user) {
+		User existingUser = userRepository.findByMailIgnoreCase(user.getMail());
+		if (existingUser != null) {
+			throw new ResourceConflictException("User with mail " + user.getMail() + " exists already");
+		}		
 	}
 
 }

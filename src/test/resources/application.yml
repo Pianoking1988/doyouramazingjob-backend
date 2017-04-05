@@ -2,5 +2,5 @@ flyway:
     locations: db/migration/common,db/migration/hsqldb
     
 logging.level.org.springframework:
-    web: DEBUG
-    security: DEBUG
+    web: INFO
+    security: INFO
