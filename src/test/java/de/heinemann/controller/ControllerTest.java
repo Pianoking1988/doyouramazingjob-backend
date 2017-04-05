@@ -40,7 +40,7 @@ import de.heinemann.utils.DatabaseResetterImpl;
     DirtiesContextTestExecutionListener.class,
 	TransactionalTestExecutionListener.class,
 	DbUnitTestExecutionListener.class })
-public class ControllerTest {
+public abstract class ControllerTest {
 
 	protected MockMvc mockMvc;
 	
