@@ -29,7 +29,7 @@ import de.heinemann.Application;
 import de.heinemann.builder.JWT;
 import de.heinemann.config.TestConfiguration;
 import de.heinemann.service.CalendarService;
-import de.heinemann.utils.SequenceResetter;
+import de.heinemann.utils.DatabaseResetterImpl;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes={Application.class, TestConfiguration.class})
@@ -51,11 +51,11 @@ public class ControllerTest {
 	protected CalendarService calendarService;
 	
 	@Autowired
-	private SequenceResetter sequenceResetter;
+	private DatabaseResetterImpl databaseResetter;
 	
 	@Before
 	public void init() {
-		sequenceResetter.resetSequences();
+		databaseResetter.resetDatabase();;
 		mockMvc = MockMvcBuilders
 				.webAppContextSetup(webApplicationContext)
 				.apply(springSecurity())
