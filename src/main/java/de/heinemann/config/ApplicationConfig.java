@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import com.auth0.spring.security.api.Auth0SecurityConfig;
 
 import de.heinemann.client.Auth0Client;
-import de.heinemann.security.Role;
 import de.heinemann.service.PrincipalService;
 
 @Configuration
@@ -50,13 +48,7 @@ public class ApplicationConfig extends Auth0SecurityConfig {
 	@Override
 	protected void authorizeRequests(final HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/ping").permitAll()
-				.antMatchers(HttpMethod.GET, "/users/*/jobs").permitAll()
-				.antMatchers(HttpMethod.GET, "/users").permitAll()
-				.antMatchers(HttpMethod.POST, "/users").hasAnyAuthority(Role.ROLE_ADMIN.toString())
-				.antMatchers("/missinguser/**").hasAnyAuthority(Role.ROLE_USER.toString())
-				.antMatchers("/missingRole/**").hasAnyAuthority("ROLE_MISSING")
-				.anyRequest().hasAnyAuthority(Role.ROLE_ADMIN.toString());
+				.anyRequest().permitAll();
 	}
 
 }

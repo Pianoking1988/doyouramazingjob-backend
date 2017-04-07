@@ -5,7 +5,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -66,11 +69,17 @@ public abstract class ControllerTest {
 	
 	@After
 	public void tearDown() {
-		databaseResetter.resetDatabase();
+		databaseResetter.restartIdentities();
 	}
 			
 	protected Calendar now() {
 		return calendarService.now();
+	}
+	
+	protected Calendar calendar(String timestamp) throws ParseException {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date date = formatter.parse(timestamp);
+		return new Calendar.Builder().setInstant(date).build();
 	}
 	
 	protected String json(Object value) throws JsonProcessingException {
@@ -96,6 +105,11 @@ public abstract class ControllerTest {
 				.header("Authorization", "Bearer " + token)
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(new ObjectMapper().writeValueAsString(requestContent)));								
+	}
+	
+	protected ResultActions get(String path) throws Exception {
+		return mockMvc.perform(MockMvcRequestBuilders.get(path)
+					.contentType(MediaType.APPLICATION_JSON));							
 	}
 
 }

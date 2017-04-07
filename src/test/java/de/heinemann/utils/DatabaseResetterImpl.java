@@ -27,7 +27,8 @@ public class DatabaseResetterImpl implements DatabaseResetter {
 		restartIdentities();		
 	}
 	
-	private void clearTables() {
+	@Override
+	public void clearTables() {
 		final String sql = "SELECT table_name FROM information_schema.system_tables WHERE table_type = 'TABLE' AND table_schem = 'PUBLIC'";
 			
 		jdbcTemplate
@@ -38,7 +39,8 @@ public class DatabaseResetterImpl implements DatabaseResetter {
 				});
 	}
 
-	private void restartIdentities() {
+	@Override
+	public void restartIdentities() {
 		final String sql = "SELECT table_name, column_name, identity_start FROM information_schema.columns"
 				+ " WHERE table_schema = 'PUBLIC' AND is_identity = 'YES'";
 
