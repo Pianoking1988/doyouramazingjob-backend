@@ -3,6 +3,7 @@ package de.heinemann.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import de.heinemann.domain.Job;
 import de.heinemann.domain.User;
+import de.heinemann.exception.ForbiddenException;
 import de.heinemann.service.JobService;
+import de.heinemann.service.PrincipalService;
 import de.heinemann.service.UserService;
 
 @RestController
@@ -23,6 +26,9 @@ public class JobController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PrincipalService principalService;
 		
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Job> getJobs(@PathVariable long userId) {
@@ -30,10 +36,16 @@ public class JobController {
         return jobService.getJobs(user);
 	}
 	
+	@PreAuthorize("hasRole('USER')")
 	@RequestMapping(method = RequestMethod.POST)
 	public Job createJob(@PathVariable long userId, @RequestBody Job job) {
 		User user = userService.getUser(userId);
-		// TODO Assert that users can only create jobs for themselves
+		
+		String principalUsername = principalService.getUsername(); 
+		if (!principalUsername.equalsIgnoreCase(user.getMail())) {
+			throw new ForbiddenException("User " + principalUsername + " is not allowed to create a job for user " + user.getMail());
+		}
+		
         return jobService.createJob(job, user);
 	}
 	

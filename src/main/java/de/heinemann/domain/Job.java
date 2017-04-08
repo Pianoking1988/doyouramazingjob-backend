@@ -21,6 +21,20 @@ public class Job {
 	private Calendar created;
 	private String createdBy;
 
+	public Job() {}
+	
+	public Job(String content) {
+		this.content = content;
+	}
+	
+	public Job(long id, User user, String content, Calendar created, String createdBy) {
+		this(content);
+		this.id = id;
+		this.user = user;
+		this.created = created;
+		this.createdBy = createdBy;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public long getId() {
@@ -32,7 +46,7 @@ public class Job {
 	}
 	
 	@ManyToOne
-	@JoinColumn(name = "\"user\"")
+	@JoinColumn(name = "userid")
 	public User getUser() {
 		return user;
 	}

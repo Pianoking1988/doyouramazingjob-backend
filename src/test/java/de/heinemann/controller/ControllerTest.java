@@ -106,7 +106,7 @@ public abstract class ControllerTest {
 					.contentType(MediaType.APPLICATION_JSON)
 					.content(new ObjectMapper().writeValueAsString(requestContent)));								
 	}
-	
+		
 	protected ResultActions get(String path) throws Exception {
 		return mockMvc.perform(MockMvcRequestBuilders.get(path)
 					.contentType(MediaType.APPLICATION_JSON));							
