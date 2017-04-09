@@ -1,3 +1,5 @@
+job.number.per.user: 3
+
 flyway:
     locations: db/migration/common,db/migration/hsqldb
     

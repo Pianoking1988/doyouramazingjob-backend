@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<users id="1" mail="user1@test.de" created="2017-04-01 00:30:59" createdby="pianoking@gmx.de" />
+	<users id="2" mail="user2@test.de" created="2017-04-01 01:30:59" createdby="developer@gmx.de" />
+	<jobs id="1" userid="1" content="content1" created="2017-04-01 01:30:59" createdby="user1@test.de" />	
+	<jobs id="2" userid="1" content="content2" created="2017-04-01 02:30:59" createdby="user1@test.de" />	
+	<jobs id="3" userid="2" content="content" created="2017-04-01 01:30:59" createdby="user2@test.de" />	
+</dataset>

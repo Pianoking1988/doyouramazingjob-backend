@@ -1,3 +1,5 @@
+job.number.per.user: 15
+
 server:
     port: 3001
     

@@ -45,7 +45,7 @@ public class JobController {
 		if (!principalUsername.equalsIgnoreCase(user.getMail())) {
 			throw new ForbiddenException("User " + principalUsername + " is not allowed to create a job for user " + user.getMail());
 		}
-		
+
         return jobService.createJob(job, user);
 	}
 	

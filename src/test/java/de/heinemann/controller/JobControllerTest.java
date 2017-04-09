@@ -2,6 +2,9 @@ package de.heinemann.controller;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
 
 import com.github.springtestdbunit.annotation.DatabaseSetup;
@@ -33,6 +36,8 @@ public class JobControllerTest extends ControllerTest {
 		);
 	}
 	
+	// TODO createJobWithNonExistingUserShouldThrow403
+	
 	@Test
 	@DatabaseSetup("job/createJobForAnotherUserShouldThrow403/prepared.xml")
 	@ExpectedDatabase(value = "job/createJobForAnotherUserShouldThrow403/expected.xml", assertionMode=DatabaseAssertionMode.NON_STRICT)
@@ -54,5 +59,39 @@ public class JobControllerTest extends ControllerTest {
 		post(token, "/users/1/jobs", actualRequest)
 				.andExpect(status().isForbidden());
 	}
+	
+	@Test
+	@DatabaseSetup("job/createJobShouldTrimJobsIfExceeding/prepared.xml")
+	@ExpectedDatabase(value = "job/createJobShouldTrimJobsIfExceeding/expected.xml", assertionMode=DatabaseAssertionMode.NON_STRICT)
+	public void createJobShouldTrimJobsIfExceeding() throws Exception {
+		String token = jwt.mail("user1@test.de").roles(Role.ROLE_USER).build();
+
+		Job actualRequest = new Job("content4");
+		
+		User user = new User(1, "user1@test.de", calendar("2017-04-01 00:30:59"), "pianoking@gmx.de");
+		Job expectedResponse = new Job(5, user, "content4", now(), "user1@test.de");
+					
+		expectContent(expectedResponse,
+				post(token, "/users/1/jobs", actualRequest)
+						.andExpect(status().isOk())
+		);
+	}
+	
+	@Test
+	@DatabaseSetup("job/getJobsForOneUserShouldReturnJobsOfThisUser/prepared.xml")
+	@ExpectedDatabase(value = "job/getJobsForOneUserShouldReturnJobsOfThisUser/expected.xml", assertionMode=DatabaseAssertionMode.NON_STRICT)
+	public void getJobsForOneUserShouldReturnJobsOfThisUser() throws Exception {
+		User user = new User(1, "user1@test.de", calendar("2017-04-01 00:30:59"), "pianoking@gmx.de");
+
+		List<Job> expectedResponse = Arrays.asList(
+				new Job(2, user, "content2", calendar("2017-04-01 02:30:59"), "user1@test.de"),
+				new Job(1, user, "content1", calendar("2017-04-01 01:30:59"), "user1@test.de")
+		);
+				
+		expectContent(expectedResponse,
+				get("/users/1/jobs")
+						.andExpect(status().isOk())
+		);
+	}	
 	
 }

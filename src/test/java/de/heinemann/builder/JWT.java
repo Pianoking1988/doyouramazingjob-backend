@@ -52,7 +52,7 @@ public class JWT {
 	
 	public String build() throws UnsupportedEncodingException {
 		SignatureAlgorithm algorithm = SignatureAlgorithm.forName(signingAlgorithm);
-		return jwtBuilder
+		String token = jwtBuilder
 				.setHeaderParam("typ", "JWT")
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(new Date().getTime() + 60000))
@@ -60,6 +60,12 @@ public class JWT {
 				.setAudience(audience)
 				.signWith(algorithm, secret.getBytes("UTF-8"))
 				.compact();
+		reset();
+		return token;
+	}
+	
+	private void reset() {
+		this.jwtBuilder = Jwts.builder();
 	}
 	
 }
