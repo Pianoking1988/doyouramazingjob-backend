@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.heinemann.domain.User;
+import de.heinemann.exception.ForbiddenException;
+import de.heinemann.security.Role;
+import de.heinemann.service.PrincipalService;
 import de.heinemann.service.UserService;
 
 /**
@@ -23,6 +26,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PrincipalService principalService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<User> getUsers() {
@@ -33,6 +39,13 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.POST)
 	public User createUser(@RequestBody User user) {
 		userService.assertThatUserIsNotExisting(user);
+		
+		String username = principalService.getUsername();
+		if (principalService.hasRole(Role.ROLE_USER)
+				&& !username.equalsIgnoreCase(user.getMail())) {
+			throw new ForbiddenException("User with mail " + user.getMail() + " cannot be created by user " + username);
+		}
+		
 		User result = userService.createUser(user);
         return result;
 	}

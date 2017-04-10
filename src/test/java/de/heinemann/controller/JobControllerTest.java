@@ -14,6 +14,7 @@ import com.github.springtestdbunit.assertion.DatabaseAssertionMode;
 
 import de.heinemann.domain.Job;
 import de.heinemann.domain.User;
+import de.heinemann.exception.ResourceNotFoundException;
 import de.heinemann.security.Role;
 
 @DatabaseTearDown("../reset.xml")
@@ -36,7 +37,19 @@ public class JobControllerTest extends ControllerTest {
 		);
 	}
 	
-	// TODO createJobWithNonExistingUserShouldThrow403
+	@Test
+	@DatabaseSetup("job/createJobWithNonExistingUserShouldThrow403/prepared.xml")
+	@ExpectedDatabase(value = "job/createJobWithNonExistingUserShouldThrow403/expected.xml", assertionMode=DatabaseAssertionMode.NON_STRICT)
+	public void createJobWithNonExistingUserShouldThrow403() throws Exception {
+		String token = jwt.mail("pianoking@gmx.de").roles(Role.ROLE_USER).build();
+				
+		Job actualRequest = new Job("content");
+		ResourceNotFoundException expectedException = new ResourceNotFoundException("User with id 1 not found");
+		
+		expectException(expectedException,
+				post(token, "/users/1/jobs", actualRequest)
+						.andExpect(status().isNotFound()));
+	}
 	
 	@Test
 	@DatabaseSetup("job/createJobForAnotherUserShouldThrow403/prepared.xml")
