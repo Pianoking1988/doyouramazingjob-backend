@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<users id="1" mail="user1@test.de" created="2017-04-01 00:30:59" createdby="pianoking@gmx.de" />
+	<jobs id="1" userid="1" content="content1" created="2017-04-01 01:30:59" createdby="user1@test.de" />	
+	<requestlogs id="1"
+				username=""
+		        path="/users/1/jobs"
+		        method="GET"
+		        content=""
+		        response="[{&quot;id&quot;:1,&quot;user&quot;:{&quot;id&quot;:1,&quot;mail&quot;:&quot;user1@test.de&quot;,&quot;created&quot;:1490999459000,&quot;createdBy&quot;:&quot;pianoking@gmx.de&quot;},&quot;content&quot;:&quot;content1&quot;,&quot;created&quot;:1491003059000,&quot;createdBy&quot;:&quot;user1@test.de&quot;}]"
+		        duration="0"
+		        exception=""
+		        requested="2017-04-01 12:30:59" />	
+</dataset>

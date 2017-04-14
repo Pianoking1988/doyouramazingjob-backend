@@ -5,8 +5,8 @@
 				username=""
 		        path="/users"
 		        method="GET"
-		        parameter=""
-		        response=""
+		        content=""
+		        response="[{&quot;id&quot;:1,&quot;mail&quot;:&quot;user1@test.de&quot;,&quot;created&quot;:1490999459000,&quot;createdBy&quot;:&quot;pianoking@gmx.de&quot;}]"
 		        duration="0"
 		        exception=""
 		        requested="2017-04-01 12:30:59" />

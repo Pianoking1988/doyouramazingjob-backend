@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<requestlogs id="1"
+				username="pianoking@gmx.de"
+		        path="/users"
+		        method="POST"
+		        content="{&quot;id&quot;:0,&quot;mail&quot;:&quot;user1@test.de&quot;,&quot;created&quot;:null,&quot;createdBy&quot;:null}"
+		        response=""
+		        duration="0"
+		        exception=""
+		        requested="2017-04-01 12:30:59" />	
+</dataset>

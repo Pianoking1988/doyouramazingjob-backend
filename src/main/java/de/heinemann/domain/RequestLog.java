@@ -13,13 +13,13 @@ import javax.persistence.Table;
 public class RequestLog {
 
 	private long id;
-    private String username = null;
-    private String path = null;
-    private String method = null;
-    private String parameter = null;
-    private String response = null;
-    private long duration = 0;
-    private String exception = null;
+    private String username = "";
+    private String path = "";
+    private String method = "";
+    private String content = "";
+    private String response = "";
+    private long duration = -1;
+    private String exception = "";
     private Calendar requested = null;
     
 	@Id
@@ -56,12 +56,12 @@ public class RequestLog {
 		this.method = method;
 	}
 
-	public String getParameter() {
-		return parameter;
+	public String getContent() {
+		return content;
 	}
 
-	public void setParameter(String parameter) {
-		this.parameter = parameter;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getResponse() {
